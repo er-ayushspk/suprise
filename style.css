@@ -355,23 +355,173 @@ main {
     }
 }
 
+
+/* Enhanced cake cutting animation */
+
 .cake.cut .flame {
-    opacity: 0
+    opacity: 0;
+    transform: translateX(-50%) scale(0.5) rotate(15deg);
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-.cake.cut .top {
-    transform: translateX(8px)
+.cake.cut .layer.top {
+    transform: translateX(25px) rotate(5deg) scale(0.95);
+    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
 }
+
+.cake.cut .layer.bottom {
+    transform: translateX(-50%) scale(0.98);
+    transition: transform 0.4s ease-out;
+}
+
+.cake.cut .icing {
+    animation: icingJiggle 0.8s ease-in-out;
+    transform: translateX(-50%) translateX(5px);
+}
+
+.cake.cut .plate {
+    animation: plateShake 0.6s ease-in-out;
+}
+
+
+/* Knife sweep effect */
+
+.cake.cut::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #fff, #ffd700, #fff, transparent);
+    animation: knifeSweep 0.4s ease-out;
+    z-index: 10;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+@keyframes knifeSweep {
+    0% {
+        transform: translateX(-100%) scaleY(0.5);
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(100%) scaleY(1.2);
+        opacity: 0;
+    }
+}
+
+@keyframes icingJiggle {
+    0%,
+    100% {
+        transform: translateX(-50%) translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateX(-50%) translateY(-3px) rotate(2deg);
+    }
+    50% {
+        transform: translateX(-50%) translateY(1px) rotate(-1deg);
+    }
+    75% {
+        transform: translateX(-50%) translateY(-1px) rotate(1deg);
+    }
+}
+
+@keyframes plateShake {
+    0%,
+    100% {
+        transform: translateX(-50%);
+    }
+    25% {
+        transform: translateX(calc(-50% - 2px));
+    }
+    75% {
+        transform: translateX(calc(-50% + 2px));
+    }
+}
+
+
+/* Multiple crumbs effect */
 
 .cake.cut::after {
-    content: "";
+    content: '';
     position: absolute;
+    top: 50%;
     left: 50%;
-    bottom: 86px;
-    width: 2px;
-    height: 60px;
-    background: #fff;
-    transform: translateX(-50%)
+    width: 6px;
+    height: 6px;
+    background: radial-gradient(circle, #8B4513, #654321);
+    border-radius: 50%;
+    animation: crumbs 1.2s ease-out;
+    z-index: 5;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes crumbs {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+    30% {
+        transform: translate(-20px, -15px) scale(1.2);
+        opacity: 1;
+    }
+    60% {
+        transform: translate(-40px, -30px) scale(0.8);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(-60px, -45px) scale(0.3);
+        opacity: 0;
+    }
+}
+
+
+/* Additional crumb particles */
+
+.cake.cut .layer.top::before,
+.cake.cut .layer.top::after {
+    content: '';
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #8B4513;
+    border-radius: 50%;
+    animation: extraCrumbs 1s ease-out;
+    z-index: 5;
+}
+
+.cake.cut .layer.top::before {
+    top: 20%;
+    left: 30%;
+    animation-delay: 0.1s;
+}
+
+.cake.cut .layer.top::after {
+    top: 60%;
+    left: 70%;
+    animation-delay: 0.2s;
+}
+
+@keyframes extraCrumbs {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(15px, 20px) scale(0.5);
+        opacity: 0;
+    }
 }
 
 
@@ -427,6 +577,21 @@ main {
     to {
         transform: translateY(110vh) rotate(360deg);
         opacity: .9
+    }
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translateY(-50vh) rotate(180deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
     }
 }
 
@@ -620,5 +785,173 @@ main {
     100% {
         top: 90px;
         left: 90px
+    }
+}
+
+
+/* Cake cut cinematic polish */
+
+.cake {
+    isolation: isolate
+}
+
+.cake::before {
+    content: "";
+    position: absolute;
+    left: -240px;
+    bottom: 126px;
+    width: 200px;
+    height: 4px;
+    background: linear-gradient(90deg, #eee, #fff);
+    border-radius: 3px;
+    box-shadow: 0 2px 10px rgba(255, 255, 255, .35);
+    transform: rotate(10deg);
+    opacity: 0;
+    z-index: 3
+}
+
+.cake.cut::before {
+    animation: knife 900ms ease forwards
+}
+
+@keyframes knife {
+    0% {
+        left: -240px;
+        opacity: 0
+    }
+    20% {
+        opacity: 1
+    }
+    60% {
+        left: 60px;
+        opacity: 1
+    }
+    100% {
+        left: 260px;
+        opacity: 0
+    }
+}
+
+.layer.top {
+    transform-origin: 40% 50%
+}
+
+.cake.cut .top {
+    transform: translate(22px, -8px) rotate(-5deg)
+}
+
+.cake.cut .bottom {
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, .28))
+}
+
+.cake.cut .icing {
+    animation: jiggle .7s ease;
+    box-shadow: 0 8px 20px rgba(255, 255, 255, .25)
+}
+
+@keyframes jiggle {
+    0% {
+        transform: translateX(-50%) scale(1)
+    }
+    35% {
+        transform: translateX(-50%) scale(1.02)
+    }
+    70% {
+        transform: translateX(-50%) scale(.995)
+    }
+    100% {
+        transform: translateX(-50%) scale(1)
+    }
+}
+
+
+/* Decorative crumbs on cut */
+
+.cake.cut .top::after {
+    content: "";
+    position: absolute;
+    right: -6px;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    background: #ffe1ea;
+    border-radius: 50%;
+    box-shadow: 6px 6px 0 #ffd3e1, 10px 2px 0 #ffe1ea, 12px 9px 0 #ffd3e1
+}
+
+
+/* Responsive enhancements */
+
+@media (max-width:1024px) {
+    header.hero {
+        padding: 84px 16px 40px
+    }
+    .panel {
+        padding: 44px 16px
+    }
+}
+
+@media (max-width:820px) {
+    header.hero h1 {
+        font-size: 40px
+    }
+    .typewriter {
+        font-size: 30px
+    }
+    .flower.rose {
+        transform: scale(.9)
+    }
+    .cake-area {
+        height: 250px
+    }
+    .cake {
+        transform: scale(.95)
+    }
+    .quotes {
+        padding: 22px 16px
+    }
+}
+
+@media (max-width:560px) {
+    header.hero h1 {
+        font-size: 34px
+    }
+    header.hero p {
+        font-size: 16px
+    }
+    .flower.rose {
+        transform: scale(.8)
+    }
+    .cake {
+        transform: scale(.9)
+    }
+    #music-dock {
+        right: 12px;
+        bottom: 12px;
+        transform: scale(.92)
+    }
+}
+
+@media (max-width:380px) {
+    .flower.rose {
+        transform: scale(.72)
+    }
+    .quotes {
+        min-height: 130px
+    }
+    #music-dock {
+        transform: scale(.85)
+    }
+}
+
+
+/* Reduced motion preference */
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+        scroll-behavior: auto !important
     }
 }
